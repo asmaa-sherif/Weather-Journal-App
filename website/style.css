@@ -1,0 +1,193 @@
+body{
+    background: #fffff8;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+*{
+    margin: 0px;
+
+}
+
+#app{
+
+    /* grid-template-columns:  */
+    height:100vh;
+    background-image: url('images/4.jpg');
+    background-position: center;
+    background-size: cover;
+    color: white;
+    display: flex;
+    justify-content: right;
+    font-size: 20px;
+    font-family: 'Oswald', sans-serif;
+}
+
+.container{
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    margin: 15px;
+    background: rgba(1, 1, 1, 0.8);
+
+
+}
+
+.holder{
+}
+
+.entry{
+margin-top: 10px;
+}
+
+#entryHolder{
+    background: white;
+    border-radius: 10px;
+    margin-top: 25px;
+}
+
+#date{
+
+}
+
+#temp{
+
+}
+
+#content{
+
+}
+
+.headline {
+text-align: center;
+font-size: 30px;
+border-bottom: solid 1px yellow ;
+margin-bottom: 25px;
+}
+.title{
+
+}
+
+/*  Basic Styling To Override Default For Basic HTML Elements */
+label{
+    display:block;
+    font-size: 27px;
+    margin-bottom: 10px;
+}
+
+input{
+    display:block;
+    width: 400px;
+    border-radius: 10px;
+    border: solid black 2px;
+    font-size: 20px;
+    font-family: 'Oswald', sans-serif;
+    border: none;
+}
+
+button{
+    background: white;
+    width: 500px;
+    color: black;
+    font-size: 25px;
+    font-family: 'Oswald', sans-serif;
+    border: none;
+    padding: 10px 100px;
+    border-radius: 10px;
+    box-shadow: 2px 4px 5px #444;
+    border-bottom: 2px solid yellow;
+}
+h1{
+    font-size: 36px;
+}
+
+.alert{
+    color: #D92323;
+    font-size: smaller;
+    font-weight: lighter;
+    margin: 7px 5px;
+    opacity: 0;
+}
+
+textarea{
+    border-radius: 0.5;
+    /* border: solid black 2px; */
+    color: black;
+    font-size: 20px;
+    font-family: 'Oswald', sans-serif;
+}
+/* Reset style for HTML element on active to have no border*/
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+/* Style for Placeholder Text*/
+::placeholder { /* Firefox, Chrome, Opera */ 
+    color: black; 
+    font-family: 'Oswald', sans-serif;
+
+} 
+  
+:-ms-input-placeholder { /* Internet Explorer 10-11 */ 
+    color: black; 
+    font-family: 'Oswald', sans-serif;
+
+} 
+  
+::-ms-input-placeholder { /* Microsoft Edge */ 
+    color: black; 
+    font-family: 'Oswald', sans-serif;
+
+} 
+
+/* ******************************************************************************************************************************************** */
+
+
+
+
+
+
+.container {
+    display: block;
+    max-width: 90vw;
+    /* margin: 0 auto; */
+    padding: 3em 1.5em 3.5em 1.5em;
+    transition: 250ms box-shadow ease-out,
+    250ms transform ease-out;
+    border-radius: 15px;
+
+
+}
+
+.container:focus-within {
+    box-shadow: 0 0.2em 2em #444444;
+    transform: scale(1.025);
+}
+
+
+        input[type="email"],
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            appearance: none;
+            border: 1px solid  #444444;
+            border-bottom: 2px solid yellow ;
+            border-radius: 5px;
+            display: block;
+            line-height: 1;
+            /* margin-bottom: 0.8em; */
+            padding: 0.85em 0.75em 0.75em 0.75em;
+            transition: 125ms border-color ease-out;
+        }
+        input[type=text]:focus{
+        outline:yellow;
+
+        }
+
+
+        
+    
