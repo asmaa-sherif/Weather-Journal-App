@@ -1,73 +1,120 @@
 /* Global Variables */
+// Personal API Key for OpenWeatherMap API
 const apiKey = "d4f4f7ed2435d1d60814d96a31cf1253";
 const generateBTN = document.querySelector("#generate");
-const feelings = document.querySelector("#feelings").value;
 
 // Create a new date instance dynamically with JS
 let d = new Date();
-let newDate = d.getMonth()+1 +'.'+ d.getDate()+'.'+ d.getFullYear();
+let newDate = d.getMonth()+1 +'.'+ d.getDate() +'.'+ d.getFullYear();
 
+
+//Adding an event listener to the buttom to perfrom the function on click
+//Adds an event listener to an existing HTML button from DOM using Vanilla JS.
+//addEventListener() method called on it, with click as the first parameter, and a named callback function as the second parameter.
 generateBTN.addEventListener("click" , async() =>
 {
-    const zipCode = document.querySelector("#zip").value ;
-    const URL = `http://api.openweathermap.org/data/2.5/weather?zip=${zipCode}&appid=${apiKey}&units=metric`;
-
-   try{
-    // beacuse fetch is asynch should put await 
-    const myResponse =  await fetch (URL);
-    // to convert stream data to JSON
-    const myData = await myResponse.json();
-    // get temperature from myData object
-    const temperature = myData.main.temp;
-    console.log(temperature);
+        // generate the URL
+        const zipCode = document.querySelector("#zip").value ;
+        const URL = `http://api.openweathermap.org/data/2.5/weather?zip=${zipCode}&appid=${apiKey}&units=metric`;
+        const feelings = document.querySelector("#feelings").value;
 
 
 
-        await fetch ("/postMyData" , {
-            method:"POST",
-            headers:{
-                "content-type" : "application/JSON"
-            },
+
+//check if zipCode is correct or not and certain all require data are put in input
+    if(zipCode.length == 5 && feelings.length != 0){
+
     
-            body: JSON.stringify({
-                date:newDate,
-                temp,
-                feelings
-    
-            })
-    
-        })
 
 
-    }catch(error){
-        console.log(error)
-    }
-   
-    userShow();
+//try and catch to find errors
+try{
+    
+        // beacuse fetch is asynch should put await 
+        const myResponse =  await fetch (URL);
+        // to convert stream data to JSON
+        const myData = await myResponse.json();
+        // get temperature from myData object
+        const temperature = myData.main.temp;
+
+        // Data is successfully returned from the external API
+        // console.log(temperature);
+
+        showData();
+
+
+
+
+            // post data from api to server
+            //The client side function should take two arguments, the URL to make a POST to, and an object holding the data to POST.
+             await fetch ("/postMyData" , {
+                method:"POST",
+                credentials: 'same-origin',
+                headers:{
+                    'Content-Type': 'application/json',
+                },
+        
+                body: JSON.stringify({
+                    date:newDate,
+                    temp:temperature,
+                    feelings,
+        
+                })
     
         
+            });
+        }catch(error){
+            console.log(error);
+            // appropriately handle the error
+
+        }
+
+       // function to put new data into client side 
+        async function showData(){
+            //asynchronous function to fetch the data from the app endpoint
+            const responseData = await fetch("/getMyData");
+            try{
+            // Transform into JSON
+            const getFinalData = await responseData.json();
+            console.log(getFinalData);    
+
+
+
+                    // Write updated data to DOM elements
+                    //The div with the id, entryHolder should have three child divs with the ids:date - temp - content
+                    const date = document.getElementById('date');
+                    const temprature = document.getElementById('temp');
+                    const content = document.getElementById('content');
+
+                    date.innerHTML = getFinalData.date;
+                    temprature.innerHTML = getFinalData.temp;
+                    content.innerHTML = getFinalData.feelings;
+
+        }catch(error){
+            console.log(error);
+               // appropriately handle the error
+        }
+        
+    }
+}
+
+
+
+else if((zipCode.length == 0 || zipCode.length != 5) && feelings.length !== 0){
+    document.querySelector(".zipAlert").style.opacity = "1";
+}
+
+
+else if(zipCode.length == 5 && feelings.length == 0 ){
+    document.querySelector(".feelingAlert").style.opacity = "1";
+
+}
+
+
+else if((zipCode.length == 0 || zipCode.length != 5) && feelings.length == 0){
+    document.querySelector(".feelingAlert").style.opacity = "1";
+    document.querySelector(".zipAlert").style.opacity = "1";
+}
+
 
 })
-
-
-
-const userShow = async ()=>{
-    const responseData = await fetch ("/getMyData");
-    try{
-    const getFinalData = await responseData.json();
-    console.log(getFinalData);
-
-document.getElementById("date").innerHTML = `Data: ${newDate}`;
-document.getElementById("temp").innerHTML = `Data: ${temperature}`;
-document.getElementById("content").innerHTML = `Data: ${feelings}`;
-
-
-}catch(error){
-    console.log(error);
-}
-}
-
-
-
-
-
